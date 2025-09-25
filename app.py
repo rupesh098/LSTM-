@@ -5,6 +5,16 @@ from tensorflow.keras.preprocessing.text import Tokenizer
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 import numpy as np
 
+import streamlit as st
+import numpy as np
+import pickle
+
+from tensorflow.keras.models import load_model
+from tensorflow.keras.layers import GRU
+from tensorflow.keras.preprocessing.text import Tokenizer
+from tensorflow.keras.preprocessing.sequence import pad_sequences
+
+
 
 #Load the LSTM Model
 from tensorflow.keras.models import load_model
@@ -48,4 +58,5 @@ if st.button("Predict Next Word"):
     next_word = predict_next_word(model, tokenizer, input_text, max_sequence_len)
 
     st.write(f'Next word: {next_word}')
+
 
