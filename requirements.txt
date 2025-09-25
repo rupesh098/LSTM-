@@ -1,10 +1,10 @@
-tensorflow
-pandas 
-numpy 
+tensorflow==2.20.0
+pandas
+numpy
 scikit-learn
 tensorboard
 matplotlib
 streamlit
 
-scikeras
+tensorboard
 
