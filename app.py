@@ -5,7 +5,21 @@ from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 
 #Load the LSTM Model
-model=load_model('next_word_lstm.h5')
+from tensorflow.keras.models import load_model
+from tensorflow.keras.layers import GRU
+
+# Custom GRU that ignores 'time_major'
+class GRUCompatible(GRU):
+    def __init__(self, *args, **kwargs):
+        kwargs.pop("time_major", None)  # remove unsupported arg
+        super().__init__(*args, **kwargs)
+
+# Load the model using the custom GRU
+model = load_model(
+    "next_word_lstm.h5",
+    custom_objects={"GRU": GRUCompatible}
+)
+
 
 #3 Laod the tokenizer
 with open('tokenizer.pickle','rb') as handle:
@@ -30,4 +44,5 @@ input_text=st.text_input("Enter the sequence of Words","To be or not to")
 if st.button("Predict Next Word"):
     max_sequence_len = model.input_shape[1] + 1  # Retrieve the max sequence length from the model input shape
     next_word = predict_next_word(model, tokenizer, input_text, max_sequence_len)
+
     st.write(f'Next word: {next_word}')
